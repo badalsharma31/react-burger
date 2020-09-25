@@ -1,0 +1,14 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin:auto;
+    background: #bd8585;
+}
+
+.BuildControls {
+
+    width: 40%;
+    
+}

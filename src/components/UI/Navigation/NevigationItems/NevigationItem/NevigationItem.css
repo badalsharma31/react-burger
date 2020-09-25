@@ -1,0 +1,46 @@
+/* mobile only */
+.NevigationItem {
+    display: block;
+    text-decoration: none;
+    height: 100%;
+}
+
+.NevigationItem a{
+    
+    text-decoration: none;
+    height: 100%;
+}
+
+.NevigationItem a:hover,
+
+.NevigationItem a.active {
+    opacity: 0.5;
+}
+
+
+/* desktop css */
+@media only screen and (min-width: 500px) {
+    .NevigationItem {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        height: 100%;
+        
+    }
+    
+    .NevigationItem a{
+        display: flex;
+        align-items: center;
+        
+        text-decoration: none;
+        height: 100%;
+    }
+    
+    .NevigationItem a:hover,
+    
+    .NevigationItem a.active {
+        opacity: 0.5;
+    }    
+
+
+}

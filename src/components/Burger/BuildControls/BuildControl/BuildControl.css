@@ -1,0 +1,13 @@
+.BuildControl {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 10px;
+    
+}
+
+
+.temp {
+    width: 70px;
+    color: #fff;
+}

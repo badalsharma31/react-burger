@@ -1,0 +1,20 @@
+
+/* mobile css */
+.NevigationItems {
+    display: block;
+    list-style: none;
+    flex-flow: column;
+    height: 100%;
+}
+
+
+/* desktop css */
+@media only screen and (min-width: 500px) {
+    .NevigationItems {
+        display: flex;
+        flex-flow: row;
+        align-items: center;
+        list-style: none;
+        height: 100%;
+    }
+}
