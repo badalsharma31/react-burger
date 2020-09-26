@@ -4,6 +4,7 @@ import Burger from "../../components/Burger/Burger"
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import Modal from "../../components/UI/Modal"
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
+import sendRequest from "../../sendRequest";
 
 const prices = {
     "cheese": 10,
@@ -89,7 +90,24 @@ class BurgerBuilder extends Component {
     }
 
     handlePurchaseContinue = () => {
-        alert("you continued")
+        const order = {
+            ingredients : this.state.ingredients,
+            price: this.state.totalPrice,
+            customer : {
+                name:"badal",
+                address: "new USA",
+                email: "test@gmail.com"
+            },
+            deliveryMethod: "fastest"
+        }
+        sendRequest.get('/orders.json', order)
+        .then(function (response) {
+            // handle success
+            console.log("res is +++++", response);
+        })
+        .catch(function (err) {
+            console.log("err ++++", err)
+        })
     }
 
     render() {
