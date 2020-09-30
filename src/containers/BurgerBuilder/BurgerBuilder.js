@@ -2,9 +2,11 @@ import React, {Component} from 'react';
 import Aux from "../../hoc/Aux";
 import Burger from "../../components/Burger/Burger"
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
-import Modal from "../../components/UI/Modal"
+import Modal from "../../components/UI/Modal";
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import sendRequest from "../../sendRequest";
+import Spinner from "../../components/UI/Spinner/Spinner";
+import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 
 const prices = {
     "cheese": 10,
@@ -25,6 +27,7 @@ class BurgerBuilder extends Component {
         totalPrice: 4,
         purchaseable : false,
         isCheckout : false,
+        loading : false
     }
 
     handlePurchaseable (ingredientsObj) {
@@ -90,6 +93,7 @@ class BurgerBuilder extends Component {
     }
 
     handlePurchaseContinue = () => {
+        this.setState({loading: true})
         const order = {
             ingredients : this.state.ingredients,
             price: this.state.totalPrice,
@@ -101,22 +105,29 @@ class BurgerBuilder extends Component {
             deliveryMethod: "fastest"
         }
         sendRequest.get('/orders.json', order)
-        .then(function (response) {
+        .then((response) => {
             // handle success
             console.log("res is +++++", response);
+            this.setState({loading: false, isCheckout : false})
         })
-        .catch(function (err) {
+        .catch((err) => {
             console.log("err ++++", err)
+            this.setState({loading: false, isCheckout : false})
         })
     }
 
     render() {
+
+        let modalContent = (<OrderSummary ingredients={this.state.ingredients} cancelOrder={this.cancelPurchase}
+                    purchaseContinue= {this.handlePurchaseContinue} price={this.state.totalPrice}
+                    ></OrderSummary>)
+            
+        if(this.state.loading == true)
+            modalContent = <Spinner>loading.......</Spinner>
         return (
             <Aux>
                 <Modal show={this.state.isCheckout} cancelPurchase= {this.cancelPurchase}>
-                    <OrderSummary ingredients={this.state.ingredients} cancelOrder={this.cancelPurchase}
-                    purchaseContinue= {this.handlePurchaseContinue} price={this.state.totalPrice}
-                    ></OrderSummary>
+                   {modalContent}
                 </Modal>
                 <Burger ingredients={this.state.ingredients}></Burger>
                 <BuildControls
@@ -131,4 +142,4 @@ class BurgerBuilder extends Component {
     }
 }
 
-export default BurgerBuilder;
+export default withErrorHandler(BurgerBuilder, sendRequest);
